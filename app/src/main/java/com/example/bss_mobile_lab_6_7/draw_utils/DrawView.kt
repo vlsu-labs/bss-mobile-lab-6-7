@@ -12,10 +12,8 @@ import android.view.View
 
 class DrawView(context: Context): View(context) {
     private val p: Paint = Paint()
-    private val rectf: RectF = RectF(700F, 100F, 800F, 150F)
-
-    private val points: FloatArray = floatArrayOf(100F, 50F, 150F, 100F, 150F, 200F, 50F, 200F, 50F, 100F)
-    private val points1: FloatArray = floatArrayOf(300F, 200F, 600F, 200F, 300F, 300F, 600F, 300F, 400F, 100F, 400F, 400F, 500F, 100F, 500F, 400F)
+    private val rect: Rect = Rect(100, 200, 200, 300)
+    private val sb: StringBuilder = StringBuilder()
 
     override fun onDraw(canvas: Canvas?) {
         if (canvas == null) {
@@ -24,39 +22,31 @@ class DrawView(context: Context): View(context) {
 
         canvas.drawARGB(80, 102, 204, 255)
 
-        p.color = Color.RED
+        p.color = Color.BLUE
         p.strokeWidth = 10F
 
-        canvas.drawPoints(points, p)
-        canvas.drawLines(points1, p)
+        p.textSize = 30F
 
-        p.color = Color.GREEN
+        sb.setLength(0)
+        sb
+            .append("width = ")
+            .append(canvas.width)
+            .append(", height = ")
+            .append(canvas.height)
+        canvas.drawText(sb.toString(), 100F, 100F, p)
 
-        canvas.drawRoundRect(rectf, 20F, 20F, p)
+        p.style = Paint.Style.FILL
+        canvas.drawRect(rect, p)
 
-        rectf.offset(0F, 150F)
-        canvas.drawOval(rectf, p)
+        p.style = Paint.Style.STROKE
+        rect.offset(150, 0)
+        canvas.drawRect(rect, p)
 
-        rectf.offsetTo(900F, 100F)
-        rectf.inset(0F, -25F)
-        canvas.drawArc(rectf, 90F, 270F, true, p)
+        p.style = Paint.Style.FILL_AND_STROKE
+        rect.offset(150, 0)
+        canvas.drawRect(rect, p)
 
-        rectf.offset(0F, 150F)
-        canvas.drawArc(rectf, 90F, 270F, false, p)
 
-        p.strokeWidth = 3F
-        canvas.drawLine(150F, 450F, 150F, 600F, p)
-        p.color = Color.BLUE
-
-        canvas.drawText("text left", 150F, 500F, p)
-
-        p.textAlign = Paint.Align.CENTER
-
-        canvas.drawText("text center", 150F, 525F, p)
-
-        p.textAlign = Paint.Align.RIGHT
-
-        canvas.drawText("text right", 150F, 550F, p)
 
     }
 }
